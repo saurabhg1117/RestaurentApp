@@ -35,7 +35,7 @@ router.post('/categories', authenticate, async (req: AuthRequest, res: Response)
 router.put('/categories/:id', authenticate, async (req: AuthRequest, res: Response): Promise<void> => {
   const { name } = req.body as { name: string };
   const category = await prisma.category.updateMany({
-    where: { id: req.params['id'], restaurantId: req.restaurantId },
+    where: { id: req.params['id'] as string, restaurantId: req.restaurantId },
     data: { name },
   });
   res.json(category);
@@ -44,7 +44,7 @@ router.put('/categories/:id', authenticate, async (req: AuthRequest, res: Respon
 // DELETE /api/menu/categories/:id
 router.delete('/categories/:id', authenticate, async (req: AuthRequest, res: Response): Promise<void> => {
   await prisma.category.deleteMany({
-    where: { id: req.params['id'], restaurantId: req.restaurantId },
+    where: { id: req.params['id'] as string, restaurantId: req.restaurantId },
   });
   res.json({ message: 'Category deleted.' });
 });
@@ -78,7 +78,7 @@ router.post('/items', authenticate, async (req: AuthRequest, res: Response): Pro
 router.put('/items/:id', authenticate, async (req: AuthRequest, res: Response): Promise<void> => {
   const { name, price, categoryId } = req.body as { name?: string; price?: number; categoryId?: string };
   const item = await prisma.menuItem.updateMany({
-    where: { id: req.params['id'], restaurantId: req.restaurantId },
+    where: { id: req.params['id'] as string, restaurantId: req.restaurantId },
     data: {
       ...(name !== undefined && { name }),
       ...(price !== undefined && { price: Number(price) }),
@@ -91,7 +91,7 @@ router.put('/items/:id', authenticate, async (req: AuthRequest, res: Response): 
 // DELETE /api/menu/items/:id
 router.delete('/items/:id', authenticate, async (req: AuthRequest, res: Response): Promise<void> => {
   await prisma.menuItem.deleteMany({
-    where: { id: req.params['id'], restaurantId: req.restaurantId },
+    where: { id: req.params['id'] as string, restaurantId: req.restaurantId },
   });
   res.json({ message: 'Item deleted.' });
 });

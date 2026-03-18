@@ -23,7 +23,7 @@ router.get('/restaurants', authenticate, superAdminOnly, async (req: AuthRequest
   res.json(restaurants.map(r => ({ 
     id: r.id, 
     name: r.name, 
-    email: r.email, 
+    userId: r.userId, 
     ownerName: r.ownerName, 
     isActive: r.isActive, 
     createdAt: r.createdAt 
